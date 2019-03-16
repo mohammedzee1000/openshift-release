@@ -25,15 +25,16 @@ tests:
   container:
     from: src
 - artifacts_dir: /tmp/artifacts
-  as: e2e-core
+  as: e2e-group1
   openshift_installer_src:
     cluster_profile: aws
   commands: |
     export CI="openshift"
-    make configure-installer-tests-cluster
-    make bin
     export PATH="$PATH:$(pwd)"
     export CUSTOM_HOMEDIR="/tmp/artifacts"
+    export TIMEOUT="30m"
+    make configure-installer-tests-cluster
+    make bin
     make test-main-e2e
     make test-odo-login-e2e
     make test-json-format-output
